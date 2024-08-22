@@ -1,0 +1,14 @@
+node_modules
+app_solved.js
+index_solved.js
+test_search_solved.js
+routes_solved.js
+controllers_solved.js
+models_solved.js
+schemas_solved.js
+repository_solved.js
+.env
+package-lock.json
+yarn.lock
+.vscode/*
+.idea/*
