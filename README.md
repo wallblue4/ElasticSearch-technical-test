@@ -25,7 +25,7 @@ Lo primero que hice fue configurar el entorno de desarrollo. Docker para Elastic
 ## Configuración
 
 1. **Clona el repositorio:**
-```http
+```bash
    git clone https://github.com/wallblue4/ElasticSearch-technical-test.git
    cd ElasticsearchTechnicalTest
 ```   
@@ -33,7 +33,7 @@ Lo primero que hice fue configurar el entorno de desarrollo. Docker para Elastic
 
 2. **Instala las dependencias:**
 
-   ```http
+   ```bash
    npm install
     ```
 
