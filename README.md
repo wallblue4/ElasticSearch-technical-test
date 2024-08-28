@@ -1,97 +1,117 @@
-# Technical Test: Elasticsearch Setup and Testing with Docker
 
----
 
-## Summary
+# Elasticsearch Technical Test
 
-### Description
+Este proyecto implementa una API para realizar búsquedas en Elasticsearch utilizando Node.js y Express.
 
-This technical test aims to assess the candidate's ability to set up an Elasticsearch environment using Docker and Docker Compose, validate the connection and authentication with Elasticsearch, and develop a Node.js script to perform both exact and fuzzy searches in Elasticsearch.
-
-### Requirements
+## Requisitos
 
 - Node.js v20.10.0
 - Docker
 - Docker Compose
 
-### Objectives
+2. **La API estará disponible en** `http://localhost:3000`
 
-1. Set up an Elasticsearch environment using Docker and Docker Compose.
-2. Perform a connection and authentication test with Elasticsearch.
-3. Develop a Node.js script to perform searches in Elasticsearch.
 
----
+# Documentación del Proyecto: Elasticsearch Technical Test
 
-## Steps to Follow
 
-1. **Clone the repository:**
-   - Clone the repository using the command:
+## El Proceso de Desarrollo
 
-     ```bash
-     git clone https://github.com/jumorap/ElasticsearchTechnicalTest
-     ```
+### Configuración Inicial
 
-   - Navigate to the project directory with:
+Lo primero que hice fue configurar el entorno de desarrollo. Docker para Elasticsearch. hubo alguno dolor de cabeza en cuanto a la instalación y configuración local. junto con el docker-compose,  ahora siguiendo las siguientes instrucciones:
+ 
+## Configuración
 
-     ```bash
-     cd ElasticsearchTechnicalTest
-     ```
+1. **Clona el repositorio:**
 
-   - *NOTE: It is recommended to use a code editor to facilitate development and configuration.*
+   
+   git clone https://github.com/wallblue4/ElasticSearch-technical-test.git
+   cd ElasticsearchTechnicalTest
+   
 
-2. **Start Elasticsearch with Docker Compose:**
-   - Ensure Docker is running on your device.
-   - In the project directory, run the following command to start Elasticsearch in the background:
+2. **Instala las dependencias:**
 
-     ```bash
-     docker compose up -d
-     ```
+   
+   npm install
+  
 
-3. **Configure Elasticsearch:**
-   - To configure access to Elasticsearch, run the command:
+3. **Crea un archivo `.env` en la raíz del proyecto y configura las variables de entorno necesarias:**
 
-     ```bash
-     docker exec -it elasticsearch bin/elasticsearch-reset-password -u elastic
-     ```
+   
+   ELASTICSEARCH_NODE=https://localhost:9200
+   ELASTICSEARCH_USERNAME=elastic
+   ELASTICSEARCH_PASSWORD=tu_contraseña
+  
 
-     - Confirm the action with "y" and press ENTER.
-     - Copy the generated password and temporarily paste it into the `index.js` file.
-   - Verify the connection to Elasticsearch using:
+4. **Inicia Elasticsearch con Docker Compose:**
 
-     ```bash
-     curl -u elastic:your_password -X GET "https://localhost:9200/_cluster/health" --insecure
-     ```
+   docker-compose up -d
 
-4. **Set up the Node.js project:**
-   - In the project directory, install the dependencies with:
+## Uso
 
-     ```bash
-     npm i
-     ```
+1. **Inicia el servidor:**
 
-   - Create a `.env` file with the necessary connection variables.
-   - Develop and run the script to test the searches.
 
----
+   npm start
 
-## Deliverables
 
-- URL of the repository where the test was completed.
-- Scripts required to solve the problem.
-- File containing the fuzzy and exact search tests.
-- Screenshots or logs demonstrating that searches were performed correctly.
-- README instructions for using the solution.
-- *NOTE: Do not include `.env`, only include a `.env.example` with undefined variables.*
+### Creación de la Estructura del Proyecto
 
-### Expected
+Decidí seguir una estructura modular para el proyecto:
 
-- A well-structured and clear README.md file.
-- Organized, clean, and modular code.
+- `src/` para el código fuente
+- `config/` para las configuraciones
+- `services/` para la lógica de negocio
+- `utils/` para utilidades comunes como los errores
+- `controllers/` para controladores de rutas
 
-### Evaluation Criteria
+Esta estructura me ayudó a mantener el código organizado y fácil de navegar.
 
-- **Functionality:** Does the API meet the requirements? Are the data indexed and searched correctly?
-- **Efficiency:** Are the searches fast and well-optimized?
-- **Error Handling:** How are common errors managed? Is the system robust?
-- **Documentation:** Are the instructions easy to follow and is the code understandable?
-- **Best Practices:** Does the code follow good development practices?
+### Implementación de las Funcionalidades
+
+1. **Indexación de Usuarios**: 
+   Esta parte fue relativamente sencilla. Lo más desafiante fue asegurarme de que el índice se creara correctamente si no existía, contando con que al relanzar el script se reindexan todos los usuarios en la imagen de Docker.
+
+2. **Búsqueda Exacta**:
+  Se realizo una activadad de investigacion en la documentacion de Elasticsearch para entender mejor las diferencias entre las consultas exactas y las de fuzzy.
+
+3. **Búsqueda Fuzzy**:
+   para estea busqueda la investifación se realizó en la documentación de Elasticsearch, pero también en la documentación de Node.js para entender mejor las diferencias entre las consultas exactas y las de fuzzy. usando operadores como or en el caso de las búsquedas fuzzy , con el fin de obtener busquedas con multiples palabras felixibles , manejando en algunos casos el rango de error por defecto , como el caso del "age" permitiendo un rango de error de 1-2 años.
+
+### Implementación de las api
+
+1. **Búsqueda Exacta**:
+   
+   La api que se utiliza para realizar la búsqueda exacta es la siguiente:
+   
+   ```http
+   GET /users/searchExact?name=Alice Johnson
+   ```
+   
+   Esta api recibe un parámetro o varios como el caso `name` que es el nombre del usuario que se desea buscar. La api devuelve un objeto JSON con la información del usuario o de los usuarios si se encuentra, o un error si no se encuentra ningún usuario con ese nombre.
+
+2. **Búsqueda Fuzzy**:
+
+   La api que se utiliza para realizar la búsqueda fuzzy es la siguiente:
+
+   ```http
+   GET /users/searchFuzzy?name=Alce
+   ```
+
+   Esta api recibe un parámetro llamado `name` que es el nombre del usuario que se desea buscar. La api devuelve un objeto JSON con la información del usuario o de los usuarios si se encuentra, o un error si no se encuentra ningún usuario con ese nombre.
+
+3. **Obtener todos los usuarios**:
+
+   La api que se utiliza para obtener todos los usuarios es la siguiente:
+
+   ```http
+   GET /users
+   ```
+
+   Esta api devuelve un objeto JSON con la información de todos los usuarios.
+
+## Autor
+
+- [Juan Medina] - [jmedinapi@unal.edu.co]
