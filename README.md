@@ -25,37 +25,38 @@ Lo primero que hice fue configurar el entorno de desarrollo. Docker para Elastic
 ## Configuración
 
 1. **Clona el repositorio:**
-
-   
+```http
    git clone https://github.com/wallblue4/ElasticSearch-technical-test.git
    cd ElasticsearchTechnicalTest
+```   
    
 
 2. **Instala las dependencias:**
 
-   
+   ```http
    npm install
-  
+    ```
 
 3. **Crea un archivo `.env` en la raíz del proyecto y configura las variables de entorno necesarias:**
 
-   
+   ```http
    ELASTICSEARCH_NODE=https://localhost:9200
    ELASTICSEARCH_USERNAME=elastic
    ELASTICSEARCH_PASSWORD=tu_contraseña
-  
+    ```
 
 4. **Inicia Elasticsearch con Docker Compose:**
 
+   ```http
    docker-compose up -d
-
+    ```
 ## Uso
 
 1. **Inicia el servidor:**
 
-
+   ```http
    npm start
-
+    ```
 
 ### Creación de la Estructura del Proyecto
 
